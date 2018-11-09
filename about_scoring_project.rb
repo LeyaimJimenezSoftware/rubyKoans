@@ -19,7 +19,7 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 #
 # Examples:
-#
+#        
 # score([1,1,1,5,1]) => 1150 points
 # score([2,3,4,6,2]) => 0 points
 # score([3,4,5,3,3]) => 350 points
@@ -31,11 +31,49 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  b = Hash.new(0)
+  result = 0
+
+  # iterate over the array, counting duplicate entries
+  dice.each do |v|
+  b[v] += 1
+  end
+
+  b.each do |k, v|
+  puts "#{k} appears #{v} times"
+
+      if (v >= 3 && k != 1 && k != 5)
+          result += k * 100
+
+      end
+      if (k == 1 && v >= 3)
+          newV = v - 3
+          result += 1000
+          result += newV * 100
+      end
+      if (k == 1 && v < 3 )
+          result += v * 100
+      end
+      if (k == 5 && v >= 3)
+          if (v > 3)
+           newV = 5 - v
+           result += newV * 50
+          end
+       result += 500
+      end
+      if (k == 5 && v < 3 )
+          result += v * 50
+      end
+
+  end
+
+  return result
+
 end
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
-    assert_equal 0, score([])
+    assert_equal 0, score([2,3,4,6,2])
   end
 
   def test_score_of_a_single_roll_of_5_is_50
