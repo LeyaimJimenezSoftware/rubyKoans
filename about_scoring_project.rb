@@ -40,7 +40,6 @@ def score(dice)
   end
 
   b.each do |k, v|
-  puts "#{k} appears #{v} times"
 
       if (v >= 3 && k != 1 && k != 5)
           result += k * 100
